@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ubooquity-user
+  labels:
+    app: ubooquity
+spec:
+  ports:
+  - port: 2202
+    targetPort: 2202
+  selector:
+    app: ubooquity
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ubooquity-admin
+  labels:
+    app: ubooquity
+spec:
+  ports:
+  - port: 2203
+    targetPort: 2203
+  selector:
+    app: ubooquity

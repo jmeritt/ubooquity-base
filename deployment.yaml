@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubooquity
+  labels:
+    app: ubooquity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubooquity
+  template:
+    metadata:
+      labels:
+        app: ubooquity
+    spec:
+      initContainers:
+      - name: change-priveleges
+        image: busybox
+        command: ["/bin/sh"]
+        args: ["-c", "chown -R 2580:2580 /programdata"]
+        volumeMounts:
+        - name: programdata
+          mountPath: /programdata
+      containers:
+      - name: ubooquity
+        image: jmeritt/ubooquity
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 2202
+        - containerPort: 2203
+        volumeMounts:
+        - name: programdata
+          mountPath: /programdata
+        - name: comics
+          mountPath: /comics
+        - name: ebooks
+          mountPath: /ebooks
+      volumes:
+      - name: programdata
+        emptyDir: {}
+      - name: comics
+        emptyDir: {}
+      - name: ebooks
+        emptyDir: {}

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ubooquity
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: ubooquity.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ubooquity-user
+          servicePort: 2202
+  - host: ubooquity-admin.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ubooquity-admin
+          servicePort: 2203
